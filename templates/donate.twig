@@ -1,0 +1,27 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    <h1>Donate:</h1>
+    {% if error == "payment_error" %}
+        <div class="alert alert-danger" role="alert">
+            A payment error has occurred.
+        </div>
+    {% endif %}
+    <form action="{{ access_point }}forms/payments.php" method="post" name="paypal" id="paypal">
+        <div class="form-group">
+          <label for="e_mail">Email: </label>
+          <input type="email" id="e_mail" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="first_name">First name: </label>
+            <input type="text" id="first_name" name="firstname" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last name: </label>
+            <input type="text" id="last_name" name="lastname" class="form-control">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-dark" type="submit">Donate via PayPal</button>
+        </div>
+    </form>
+{% include "footer.twig" %}

@@ -1,0 +1,17 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    {% for streaminfo in stream %}
+    <h2>Stream: {{ streaminfo.name }}</h2>
+    <div class="row">
+            <div class="col-sm">
+                {{ streaminfo.embed_code|raw }}
+                <h5>Description:</h5>
+                <p>{{ streaminfo.description }}</p>
+            </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% include "footer.twig" %}

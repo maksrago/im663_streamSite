@@ -1,0 +1,17 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    <h2>Streams:</h2>
+    <div class="row">
+        {% for stream in streams %}
+            <div class="col-sm">
+                {{ stream.embed_code|raw }}
+                <br>
+                <small>Stream info:</small>
+                <p>Stream name: <a href="{{ access_point }}stream.php?id={{ stream.id }}">{{ stream.name }}</a></p>
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% include "footer.twig" %}

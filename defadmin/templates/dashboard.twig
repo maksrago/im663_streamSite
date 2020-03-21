@@ -1,0 +1,47 @@
+{% include "header.twig" %}
+<div class="container-fluid">
+    <h1>{{ site_name }} dashboard:</h1>
+    {% if error == "updateuserrole" %}
+    <div class="alert alert-danger" role="alert">
+        An error occurred during the updating of the user's role. This is usually caused by attempting to update an invalid username's role.
+    </div>
+    {% endif %}
+    {% if success == "updateduserrole" %}
+    <div class="alert alert-success" role="alert">
+        Successfully changed user's role.
+    </div>
+    {% endif %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Stream name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Description</th>
+            <th scope="col">Edit stream</th>
+            <th scope="col">Delete stream</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for stream in streams %}
+        <tr>
+            <th scope="row">{{ stream.id }}</th>
+            <td>{{ stream.name }}</td>
+            <td>{{ stream.username }}</td>
+            <td>{{ stream.description|slice(0, 50) }}...</td>
+            <td><a href="{{ admin_endpoint }}forms/editstream.php?id={{ stream.id }}" class="btn btn-dark">Edit stream</a></td>
+            <td><a href="{{ admin_endpoint }}forms/deletestream.php?id={{ stream.id }}" class="btn btn-danger">Delete stream</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="form-group">
+        <a class="btn btn-dark" href="{{ admin_endpoint }}forms/createstream.php">Create stream</a>
+        <a class="btn btn-dark" href="{{ admin_endpoint }}forms/uploadbadge.php">Upload badge</a>
+        <a class="btn btn-dark" href="{{ admin_endpoint }}forms/assignuserbadge.php">Assign user badge</a>
+        <a class="btn btn-dark" href="{{ admin_endpoint }}forms/updateuserrole.php">Update user role</a>
+        <a class="btn btn-danger" href="{{ admin_endpoint }}logout.php">Logout</a>
+    </div>
+    <p>Copyright © {{ year }} {{ site_name }}.</p>
+</div>
+{% include "footer.twig" %}

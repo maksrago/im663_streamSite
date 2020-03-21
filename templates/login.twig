@@ -1,0 +1,23 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    <h1>Login:</h1>
+    {% if error == "invalid_login" %}
+    <div class="alert alert-danger" role="alert">
+        Your login is invalid. Please check your username and password before trying again.
+    </div>
+    {% endif %}
+    <form method="post" action="{{ access_point }}forms/login.php">
+        <div class="form-group">
+            <label for="user_name">Username:</label>
+            <input type="text" class="form-control" id="user_name" name="username" aria-describedby="Username" required="">
+        </div>
+        <div class="form-group">
+            <label for="pass_word">Password:</label>
+            <input type="password" name="password" class="form-control" id="pass_word" required="">
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Login</button>
+    </form>
+    <small>Don't have an account? No problem, register <a href="{{ access_point }}register.php">here</a>.</small>
+</div>
+{% include "footer.twig" %}

@@ -1,0 +1,24 @@
+{% include "header.twig" %}
+<div class="container">
+    <h1>{{ site_name }} admin login:</h1>
+    {% if error == "invalid_login" %}
+        <div class="alert alert-danger" role="alert">
+            The username/password you have entered may be wrong. Your account may not have the is_admin permission set in the database. If you are unsure, contact your System Administrator.
+        </div>
+    {% endif %}
+    <form method="post" action="{{ admin_endpoint }}forms/login.php">
+    <div class="form-group">
+        <label for="user_name">Username:</label>
+        <input name="username" maxlength="50" id="user_name" type="text" class="form-control">
+    </div>
+        <div class="form-group">
+            <label for="pass_word">Password:</label>
+            <input name="password" id="pass_word" type="password" class="form-control">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-info" name="login_submit">Login</button>
+        </div>
+    </form>
+    <p>Copyright © {{ year }} {{ site_name }}.</p>
+</div>
+{% include "footer.twig" %}

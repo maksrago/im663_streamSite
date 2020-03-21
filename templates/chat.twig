@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat - {{ stream_name }} - {{ site_name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ templates_folder }}/css/chat.css">
+    <link rel="stylesheet" href="{{ templates_folder }}/css/global.css">
+    <script>
+        function ReloadChat() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("messages_box").innerHTML =
+                        this.responseText;
+                }
+            };
+            xhttp.open("GET", "forms/chatreload.php?id={{ stream_id }}", true);
+            xhttp.send();
+        }
+        window.setInterval(function(){
+           ReloadChat();
+        }, 10000);
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2>Stream name: {{ stream_name }}</h2>
+    <div class="chat_window">
+        <div class="messages" id="messages_box">
+    {% for message in chat_messages %}
+                <p>{{ message.user }}{% for badge in user_badges %}{% if badge.username == message.user %}<img src="badges/{{ badge.filename }}">{% endif %}{% endfor %}: {{ message.date }}: {{ message.message }}</p>
+    {% endfor %}
+        </div>
+    <form method="post" action="{{ access_point }}forms/sendmessage.php">
+        <input type="hidden" name="stream_id" value="{{ stream_id }}">
+        <div class="form-group">
+        <label for="message_box">Message:</label>
+    <input type="text" class="form-control" name="message" id="message_box" data-emojiable="true">
+        </div>
+            {% if enable_captcha_for_chat == true %}
+            <div class="form-group">
+                <img id="captcha" src="{{ access_point }}captcha/securimage_show.php" alt="CAPTCHA Image" />
+            </div>
+            <div class="form-group">
+                <input type="text" name="captcha_code" size="10" maxlength="7">
+            </div>
+            <div class="form-group">
+                <a href="#" onclick="document.getElementById('captcha').src = '{{ access_point }}captcha/securimage_show.php?' + Math.random(); return false">Click me for a new captcha if you can't solve it.</a>
+            </div>
+        {% endif %}
+        <div class="form-group">
+        <button type="submit" name="send_msg" class="btn btn-dark">Send message!</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>

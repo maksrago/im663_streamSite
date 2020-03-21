@@ -1,0 +1,51 @@
+{% include "header.twig" %}
+<div class="container-fluid">
+    <h1>{{ site_name }} upload badge:</h1>
+    {% if error == "notimage" %}
+    <div class="alert alert-danger" role="alert">
+        Badge file is not an image!
+    </div>
+    {% endif %}
+    {% if error == "file_exists" %}
+        <div class="alert alert-danger" role="alert">
+            File already exists in the badge folder!
+        </div>
+    {% endif %}
+    {% if error == "filetoobig" %}
+        <div class="alert alert-danger" role="alert">
+            File is too big!
+        </div>
+    {% endif %}
+    {% if error == "badformat" %}
+        <div class="alert alert-danger" role="alert">
+            File format is not allowed.
+        </div>
+    {% endif %}
+    {% if error == "errorupload" %}
+        <div class="alert alert-danger" role="alert">
+            An error occurred during the image upload. You should check to see if you've chowned the badge folder.
+        </div>
+    {% endif %}
+    <form method="post" action="{{ admin_endpoint }}forms/uploadbadgefile.php" enctype="multipart/form-data">
+        <div class="form-group">
+        <label for="badge_file">Badge file to upload:</label>
+            <input type="file" id="badge_file" name="badgefile" required>
+            <br>
+            <little style="font-size: 10px;">GIF, PNG, and JPG are supported.</little>
+        </div>
+        <div class="form-group">
+            <label for="stream_id">Stream ID (you will find this in the stream.php?id= link in streams.php):</label>
+            <input type="number" name="stream_id" id="stream_id" required>
+        </div>
+        <div class="form-group">
+            <label for="badge_name">Badge name (spaces will be removed):</label>
+            <input type="text" class="badge_name" name="badgename" id="badge_name" required>
+        </div>
+        <div class="form-group">
+            <a class="btn btn-info" href="{{ admin_endpoint }}">Back</a>
+            <button class="btn btn-dark" name="upload_badge" type="submit">Upload badge</button>
+        </div>
+    </form>
+    <p>Copyright © {{ year }} {{ site_name }}.</p>
+</div>
+{% include "footer.twig" %}

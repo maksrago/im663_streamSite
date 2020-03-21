@@ -1,0 +1,63 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    <h1>Register:</h1>
+    {% if error == "system_error" %}
+        <div class="alert alert-danger" role="alert">
+            Username is in use. Please pick a different one.
+        </div>
+    {% endif %}
+    {% if error == "bad_email" %}
+        <div class="alert alert-danger" role="alert">
+        You did not input a valid email.
+        </div>
+    {% endif %}
+    {% if error == "tos_not_checked" %}
+        <div class="alert alert-danger" role="alert">
+        You did not agree to the terms of conditions.
+        </div>
+    {% endif %}
+    {% if error == "invalid_input" %}
+        <div class="alert alert-danger" role="alert">
+        Please fill out all forms...
+        </div>
+    {% endif %}
+    {% if error == "captcha" %}
+        <div class="alert alert-warning" role="alert">
+        You must've made an error with the captcha. Please try again.
+        </div>
+    {% endif %}
+    <form method="post" action="{{ access_point }}forms/register.php">
+        <div class="form-group">
+            <label for="user_name">Username:</label>
+            <input type="text" class="form-control" id="user_name" name="username" aria-describedby="Username" required="">
+        </div>
+        <div class="form-group">
+            <label for="real_name">Real name:</label>
+            <input type="text" class="form-control" id="real_name" name="realname" aria-describedby="Real name" required="">
+        </div>
+        <div class="form-group">
+            <label for="e_mail">Email:</label>
+            <input type="email" class="form-control" id="e_mail" name="email" aria-describedby="Email" required="">
+        </div>
+        <div class="form-group">
+            <label for="pass_word">Password:</label>
+            <input type="password" name="password" class="form-control" id="pass_word" required="">
+        </div>
+        <div class="form-group form-check">
+            <input type="checkbox" name="tos_checkbox" class="form-check-input" id="tos_check" required="">
+            <label class="form-check-label" for="tos_check">By registering, you agree to the <a href="{{ access_point }}page.php?name=tos">terms and conditions.</a></label>
+        </div>
+        <div class="form-group">
+            <img id="captcha" src="{{ access_point }}captcha/securimage_show.php" alt="CAPTCHA Image" />
+        </div>
+        <div class="form-group">
+            <input type="text" name="captcha_code" size="10" maxlength="7">
+        </div>
+        <div class="form-group">
+            <a href="#" onclick="document.getElementById('captcha').src = '{{ access_point }}captcha/securimage_show.php?' + Math.random(); return false">Click me for a new captcha if you can't solve it.</a>
+        </div>
+        <button type="submit" class="btn btn-outline-info">Register</button>
+    </form>
+</div>
+{% include "footer.twig" %}

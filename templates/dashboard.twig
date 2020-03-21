@@ -1,0 +1,45 @@
+{% include "header.twig" %}
+{% include "menu.twig" %}
+<div class="container">
+    <h1>Welcome, {{ username }}!</h1>
+    <h3>Account management:</h3>
+    {% if error == "password_change" %}
+    <div class="alert alert-danger" role="alert">
+    You have entered an invalid password for the password change. Please try entering your current password again!
+    </div>
+    {% endif %}
+    <form action="{{ access_point }}forms/subscribe.php" method="post">
+    <div class="form-group">
+        <h6>Subscribe to a channel:</h6>
+        <label for="channel_name">Channel:</label>
+        <input type="text" maxlength="50" class="form-control" id="channel_name" name="channel">
+    </div>
+        <div class="form-group">
+            <label for="pay_method">Payment method: </label>
+        <select id="pay_method" name="payment_method">
+            <option>paypal</option>
+        </select>
+        </div>
+    <div class="form-group">
+        <small>All payments are in USD.</small>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info">Subscribe</button>
+    </div>
+    </form>
+    <form action="{{ access_point }}forms/changepassword.php" method="post">
+        <div class="form-group">
+            <h3>Change password:</h3>
+            <label for="current_password">Current password:</label>
+            <input type="password" maxlength="50" class="form-control" id="current_password" name="currentpassword">
+        </div>
+        <div class="form-group">
+            <label for="new_password">New password:</label>
+            <input type="password" maxlength="50" class="form-control" id="new_password" name="newpassword">
+        </div>
+        <div class="form-group">
+            <button type="submit" name="password_submit" class="btn btn-success">Change password</button>
+        </div>
+    </form>
+</div>
+{% include "footer.twig" %}
